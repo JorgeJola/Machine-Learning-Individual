@@ -4,9 +4,9 @@ import numpy as np
 from datetime import datetime
 
 #Se cargan los nuevos dataset generados a partir del proceso de ETL 
-df_movies=pd.read_csv('new_movies.csv')
-df_crew=pd.read_csv('crew.csv')
-df_cast=pd.read_csv('cast.csv')
+df_movies=pd.read_csv('data/new_movies.csv')
+df_crew=pd.read_csv('data/crew.csv')
+df_cast=pd.read_csv('data/cast.csv')
 movies_cast=df_movies.merge(df_cast, how='inner',on='id')
 movies_crew=df_movies.merge(df_crew,how='inner',on='id')
 
