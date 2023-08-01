@@ -216,7 +216,7 @@ movies.dropna(subset=['release_date'],inplace=True)
 
 #Finalmente para este dataset movies se eliminaron columnas innecesarias con ayuda de la función .drop
 #Las columnas eliminadas fueron: video, imdb_id, adult, original_title, poster_path y homepage.
-columnas_a_eliminar = ['video','imdb_id','adult','original_title','poster_path', 'homepage']
+columnas_a_eliminar = ['video','imdb_id','adult','original_title','poster_path', 'homepage','poster_path_collection','backdrop_path_collection']
 movies = movies.drop(columnas_a_eliminar, axis=1)
 
 #Asi quedaria el dataset final de movies
@@ -276,6 +276,10 @@ cast['id_actor']=id_actor
 cast['name']=name
 cast['order']=order
 cast['profile_path']=profile_path
+
+#Se elimina columnas que se consideran innecesarias ya que no se van a tener en cuenta en los siguientes procesos
+columnas_a_eliminar = ['profile_path','order']
+cast = cast.drop(columnas_a_eliminar, axis=1)
 #Se exportan los datos a csv
 #cast.to_csv('cast.csv', index=False)  
 
@@ -311,5 +315,9 @@ crew['id_crew']=id_crew
 crew['job']=job
 crew['name']=name
 crew['profile_path']=profile_path
+
+#Se elimina columnas que se consideran innecesarias ya que no se van a tener en cuenta en los siguientes procesos
+columnas_a_eliminar = ['profile_path','credit_id']
+crew = crew.drop(columnas_a_eliminar, axis=1)
 #Se exportan los datos a csv
 #crew.to_csv('crew.csv', index=False)
