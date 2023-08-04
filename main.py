@@ -125,7 +125,7 @@ def get_director(nombre_director:str):
     ganancia=[]
     retorno=[]
     for j,i in movies_crew.name.items():
-        if i==nombre_director:
+        if str(i)==nombre_director:
             if movies_crew.job[j]=='Director':
                 lis_return.append(movies_crew.iloc[j,26]) 
                 titulos.append(movies_crew.title[j])
