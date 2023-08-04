@@ -9,6 +9,11 @@ from enum import Enum
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+
+#DATA GENERAL DE LA API
+app = FastAPI()
+app.title = "Movies API - ML MoviesRecommenderSystem"
+app.version = "1.0.0"
 #Se cargan los nuevos dataset generados a partir del proceso de ETL 
 df_movies=pd.read_csv('data/new_movies.csv')
 df_crew=pd.read_csv('data/crew.csv')
