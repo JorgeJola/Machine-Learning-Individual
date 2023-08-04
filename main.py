@@ -4,6 +4,10 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from datetime import datetime
+from fastapi import FastAPI, Form, Request
+from enum import Enum
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 #Se cargan los nuevos dataset generados a partir del proceso de ETL 
 df_movies=pd.read_csv('data/new_movies.csv')
