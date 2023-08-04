@@ -118,7 +118,6 @@ def productoras_exitosas(productora:str):
 
 @app.get('/get_director/{nombre_director}')
 def get_director(nombre_director:str):
-def get_director(nombre_director:str):
     lis_return=[]
     titulos=[]
     año_estreno=[]
