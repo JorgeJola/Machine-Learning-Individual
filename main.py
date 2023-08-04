@@ -8,7 +8,6 @@ from datetime import datetime
 #Se cargan los nuevos dataset generados a partir del proceso de ETL 
 df_movies=pd.read_csv('data/new_movies.csv')
 df_crew=pd.read_csv('data/crew.csv')
-df_cast=pd.read_csv('data/cast.csv')
 movies_cast=df_movies.merge(df_cast, how='inner',on='id')
 movies_crew=df_movies.merge(df_crew,how='inner',on='id')
 
@@ -122,7 +121,12 @@ def get_director(nombre_director:str):
 def recomendacion(title:str):
     new_datos=df_movies[0:5000]
     new_datos.reset_index
+    for j,i in new_datos['name_genres'].items():
+        new_datos['name_genres'][j]=i.replace(",", "").replace("[", "").replace("]", "").replace("'", "")
     new_datos['union_texto']=new_datos['name_genres'] + ' ' + new_datos['title']   + ' ' + new_datos['overview']
+    for j,i in new_datos['union_texto'].items():
+        if type(i) ==float:
+            new_datos['union_texto'][j]='-'
     tfidf_vectorizer = TfidfVectorizer(stop_words='english')
     tfidf_matrix = tfidf_vectorizer.fit_transform(new_datos['union_texto'])
     matrix_cosine=cosine_similarity(tfidf_matrix, tfidf_matrix)
@@ -131,5 +135,5 @@ def recomendacion(title:str):
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     top_indices = [i[0] for i in sim_scores[1:10+1]]
     top_movies = new_datos['title'].iloc[top_indices].values
-    return(top_movies)
+    return(print(f'El top 10 de peliculas recomendadas son las siguientes: {top_movies}'))
 
