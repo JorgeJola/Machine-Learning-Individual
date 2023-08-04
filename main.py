@@ -137,7 +137,7 @@ def get_director(nombre_director:str):
     if len(lis_return)==0:
         outcome= 'No se encontro director'
     else:
-        outcome={'Director':nombre_director, 'retorno':round(sum(lis_return),5),'peliculas:':peliculas}
+        outcome={'Director':nombre_director, 'retorno':round(sum(lis_return),5),'peliculas':peliculas}
     return outcome
 
 # ML
