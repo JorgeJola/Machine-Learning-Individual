@@ -15,10 +15,17 @@ app = FastAPI()
 app.title = "Movies API - ML MoviesRecommenderSystem"
 app.version = "1.0.0"
 
-#Se cargan los nuevos dataset generados a partir del proceso de ETL 
-df_movies=pd.read_csv('data/new_movies.csv')
-df_crew=pd.read_csv('data/crew.csv')
-movies_crew=df_movies.merge(df_crew,how='inner',on='id')
+@app.on_event("startup")
+async def startup_event():
+    #Se cargan los nuevos dataset generados a partir del proceso de ETL 
+    global df_movies
+    global df_crew
+    global movies_crew
+    df_movies=pd.read_csv('data/new_movies.csv')
+    df_crew=pd.read_csv('data/crew.csv')
+    movies_crew=df_movies.merge(df_crew,how='inner',on='id')
+
+
 
 @app.get('/peliculas_idioma/{idioma}')
 def peliculas_idioma(idioma:str):
