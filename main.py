@@ -127,10 +127,7 @@ def get_director(nombre_director):
                 ganancia.append(round(movies_crew.revenue[j],5))
                 presupuesto.append(round(movies_crew.budget[j],5))
     peliculas=[{'titulo': v1, 'año_lanzamiento': v2, 'presupuesto': v3, 'ganancia': v4, 'retorno':v5} for v1, v2, v3,v4,v5 in zip(titulos, año_estreno, presupuesto, ganancia, retorno)]
-    if len(lis_return)==0:
-        return('No se encontraron peliculas para este director')
-    else:
-        return('El actor consiguio un retorno total de:',round(sum(lis_return),5),'peliculas:',peliculas)
+    return('El actor consiguio un retorno total de:',round(sum(lis_return),5),'peliculas:',peliculas)
 
 # ML
 @app.get('/recomendacion/{titulo}')
