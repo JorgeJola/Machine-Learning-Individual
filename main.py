@@ -1,6 +1,8 @@
 #Se cargan las librerias necesarias para llevar a cabo la API y las funciones dentro de esta
 import pandas as pd
 import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from datetime import datetime
 
 #Se cargan los nuevos dataset generados a partir del proceso de ETL 
@@ -116,8 +118,18 @@ def get_director(nombre_director:str):
         return(f'El actor consiguio un retorno total de {round(sum(lis_return),5)}')
 
 # ML
-# @app.get('/recomendacion/{titulo}')
-# def recomendacion(titulo:str):
-#     '''Ingresas un nombre de pelicula y te recomienda las similares en una lista'''
-#     return {'lista recomendada': respuesta}
+@app.get('/recomendacion/{titulo}')
+def recomendacion(title:str):
+    new_datos=df_movies[0:5000]
+    new_datos.reset_index
+    new_datos['union_texto']=new_datos['name_genres'] + ' ' + new_datos['title']   + ' ' + new_datos['overview']
+    tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+    tfidf_matrix = tfidf_vectorizer.fit_transform(new_datos['union_texto'])
+    matrix_cosine=cosine_similarity(tfidf_matrix, tfidf_matrix)
+    idx=new_datos.index[new_datos['title']==title][0]
+    sim_scores = list(enumerate(matrix_cosine[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    top_indices = [i[0] for i in sim_scores[1:10+1]]
+    top_movies = new_datos['title'].iloc[top_indices].values
+    return(top_movies)
 
