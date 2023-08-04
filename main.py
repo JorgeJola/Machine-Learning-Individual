@@ -110,20 +110,27 @@ def productoras_exitosas(productora:str):
 
 
 @app.get('/get_director/{nombre_director}')
-def get_director(nombre_director:str):
-    ''' Se ingresa el nombre de un director que se encuentre dentro de un dataset debiendo devolver el éxito del mismo medido a través del retorno. 
-    Además, deberá devolver el nombre de cada película con la fecha de lanzamiento, retorno individual, costo y ganancia de la misma. En formato lista'''
+def get_director(nombre_director):
     lis_return=[]
-    print(f'El/la director@ {nombre_director} dirijio peliculas como:')
+    titulos=[]
+    año_estreno=[]
+    presupuesto=[]
+    ganancia=[]
+    retorno=[]
     for j,i in movies_crew.name.items():
         if i==nombre_director:
             if movies_crew.job[j]=='Director':
                 lis_return.append(movies_crew.iloc[j,26]) 
-                print(f'{movies_crew.title[j]} con un retorno de {round(movies_crew.iloc[j,26],5)}, esta pelicula fue lanzada en el año {int(movies_crew.release_year[j])} teniendo un costo de {round(movies_crew.budget[j],5)} y una ganancia de {round(movies_crew.revenue[j],5)}')         
+                titulos.append(movies_crew.title[j])
+                retorno.append(round(movies_crew.iloc[j,26],5))
+                año_estreno.append(int(movies_crew.release_year[j]))
+                ganancia.append(round(movies_crew.revenue[j],5))
+                presupuesto.append(round(movies_crew.budget[j],5))
+    peliculas=[{'titulo': v1, 'año_lanzamiento': v2, 'presupuesto': v3, 'ganancia': v4, 'retorno':v5} for v1, v2, v3,v4,v5 in zip(titulos, año_estreno, presupuesto, ganancia, retorno)]
     if len(lis_return)==0:
-        return(f'No se encontraron peliculas para este director')
+        return('No se encontraron peliculas para este director')
     else:
-        return(f'El actor consiguio un retorno total de {round(sum(lis_return),5)}')
+        return('El actor consiguio un retorno total de:',round(sum(lis_return),5),'peliculas:',peliculas)
 
 # ML
 @app.get('/recomendacion/{titulo}')
