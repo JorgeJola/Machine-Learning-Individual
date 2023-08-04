@@ -137,8 +137,8 @@ def get_director(nombre_director:str):
     if len(lis_return)==0:
         return('No se encontraron peliculas para este director')
     else:
-        outcome={'El director consiguio un retorno total de':round(sum(lis_return),5),'peliculas:':peliculas}
-        return(outcome)
+        outcome={'Director':nombre_director, 'retorno':round(sum(lis_return),5),'peliculas:':peliculas}
+        return outcome
 
 # ML
 @app.get('/recomendacion/{titulo}')
