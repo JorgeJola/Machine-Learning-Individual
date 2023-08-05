@@ -16,15 +16,10 @@ def matrix(df):
     matrix_cosine=cosine_similarity(tfidf_matrix, tfidf_matrix)
     return matrix_cosine
 
-def recomendacion(indice_pelicula, matriz_sim, df, top_n=5):
-    #Dada la correspondencia de los indices del df con la matriz me quedo con los puntajes de similitud en torno a esa pelicula
-    sim_scores = list(enumerate(matriz_sim[indice_pelicula]))
-    #Ordeno de mayor a menor los scores
+def recomendacion(title:str,matrix_cosine,df):
+    idx=df.index[df['title']==title][0]
+    sim_scores = list(enumerate(matrix_cosine[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    #Selecciono lo más similares en funcion de top_n, evadiendo el primero que corresponde a la misma pelicula
-    top_indices = [i[0] for i in sim_scores[1:top_n+1]]
-
-    #Me quedo con los titulos y la similitud
+    top_indices = [i[0] for i in sim_scores[1:5+1]]
     top_movies = df['title'].iloc[top_indices].values
-    # scores = sim_scores[1:top_n+1]
-    return top_movies
+    return('El top 5 de peliculas recomendadas son las siguientes:',top_movies)
