@@ -25,6 +25,8 @@ async def startup_event():
     df_crew=pd.read_csv('data/crew.csv')
     df_directores = df_crew[df_crew['job'] == 'Director']
     movies_crew=df_movies.merge(df_directores,how='inner',on='id')
+    columnas_a_eliminar = ['original_language','overview','popularity','release_date','runtime','status','tagline','vote_average','vote_count','id_collection','name_collection','id_genres','name_genres','id_companies','name_companies','iso_countries','name_countries','iso_lenguages','name_lenguages','department','gender','id_crew','job']
+    movies_crew= movies_crew.drop(columnas_a_eliminar, axis=1)
 
 
 
