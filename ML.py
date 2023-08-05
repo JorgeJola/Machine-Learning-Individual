@@ -7,8 +7,6 @@ from sklearn.preprocessing import MultiLabelBinarizer, StandardScaler
 from sklearn.neighbors import NearestNeighbors
 
 def matrix(df):
-    for j,i in df['name_genres'].items():
-        df['name_genres'][j]=i.replace(",", "").replace("[", "").replace("]", "").replace("'", "")
     df['union_texto']=df['name_genres'] + ' ' + df['title']   + ' ' + df['overview']
     for j,i in df['union_texto'].items():
         if type(i) ==float:

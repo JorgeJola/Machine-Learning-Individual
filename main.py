@@ -30,6 +30,8 @@ async def startup_event():
     global new_datos
     new_datos = df_movies[0:5000][['title', 'name_genres', 'overview']]
     new_datos.reset_index
+    for j,i in new_datos['name_genres'].items():
+        new_datos['name_genres'][j]=i.replace(",", "").replace("[", "").replace("]", "").replace("'", "")
     global my_matrix
     my_matrix=matrix(new_datos)
     
