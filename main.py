@@ -119,25 +119,17 @@ def productoras_exitosas(productora:str):
 @app.get('/get_director/{nombre_director}')
 def get_director(nombre_director:str):
     lis_return=[]
-    titulos=[]
-    año_estreno=[]
-    presupuesto=[]
-    ganancia=[]
-    retorno=[]
+    lis_peliculas=[]
     for j,i in movies_crew.name.items():
-        if str(i)==nombre_director:
+        if i==nombre_director:
             if movies_crew.job[j]=='Director':
                 lis_return.append(movies_crew.iloc[j,26]) 
-                titulos.append(movies_crew.title[j])
-                retorno.append(round(movies_crew.iloc[j,26],5))
-                año_estreno.append(int(movies_crew.release_year[j]))
-                ganancia.append(round(movies_crew.revenue[j],5))
-                presupuesto.append(round(movies_crew.budget[j],5))
-    peliculas=[{'titulo': v1, 'año_lanzamiento': v2, 'presupuesto': v3, 'ganancia': v4, 'retorno':v5} for v1, v2, v3,v4,v5 in zip(titulos, año_estreno, presupuesto, ganancia, retorno)]
+                pelicula={'titulo': movies_crew.title[j], 'año_lanzamiento': int(movies_crew.release_year[j]), 'presupuesto': movies_crew.budget[j], 'ganancia': round(movies_crew.revenue[j],5), 'retorno':round(movies_crew.iloc[j,26],5)}
+                lis_peliculas.append(pelicula)
     if len(lis_return)==0:
         outcome= 'No se encontro director'
     else:
-        outcome={'Director':nombre_director, 'retorno':round(sum(lis_return),5),'peliculas':peliculas}
+        outcome={'Director':nombre_director, 'retorno':round(sum(lis_return),5),'peliculas':lis_peliculas}
     return outcome
 
 # ML
