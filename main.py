@@ -8,6 +8,7 @@ from fastapi import FastAPI, Form, Request
 from enum import Enum
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from ML import matrix
 
 
 #DATA GENERAL DE LA API
@@ -27,6 +28,12 @@ async def startup_event():
     movies_crew=df_movies.merge(df_directores,how='inner',on='id')
     columnas_a_eliminar = ['original_language','overview','popularity','release_date','runtime','status','tagline','vote_average','vote_count','id_collection','name_collection','id_genres','name_genres','id_companies','name_companies','iso_countries','name_countries','iso_lenguages','name_lenguages','department','gender','id_crew','job']
     movies_crew= movies_crew.drop(columnas_a_eliminar, axis=1)
+    global new_datos
+    new_datos = df_movies[0:5000][['title', 'genres', 'overview']]
+    new_datos.reset_index
+    global my_matrix
+    my_matrix=matrix(new_datos)
+    
 
 
 
@@ -122,13 +129,13 @@ def productoras_exitosas(productora:str):
 @app.get('/get_director/{nombre_director}')
 def get_director(nombre_director: str):
     director = nombre_director.title()
-    indices = []
+    x = []
     for index, movie in movies_crew.iterrows():
         if director in movie['name']:
-            indices.append(index)
+            x.append(index)
 
-    if len(indices) > 0:
-        peliculas = movies_crew.iloc[indices][['title', 'release_year', 'budget', 'revenue', 'return']]
+    if len(x) > 0:
+        peliculas = movies_crew.iloc[x][['title', 'release_year', 'budget', 'revenue', 'return']]
         retorno_total = peliculas['return'].sum() # --> Así se pidió en las consultas
         #retorno_total = peliculas['revenue'].sum() / peliculas['budget'].sum() 
         titulos = peliculas['title'].to_list()
@@ -136,11 +143,9 @@ def get_director(nombre_director: str):
         presupuesto = peliculas['budget'].to_list()
         ganancia = peliculas['revenue'].to_list()
         
-        #SALIDA EN VERSION LISTAS
-        #salida = { 'director':director, 'return': round(retorno_total, 2),  'titles': titulos, 'release_dates': fechas_estreno, 'budgets': presupuesto, 'revenues':ganancia}
-        pelis_json = [{'titulo': e1, 'año_lanzamiento': e2, 'presupuesto': e3, 'ganancia': e4} for e1, e2, e3,e4 in zip(titulos, fechas_estreno, presupuesto, ganancia)]
+        peliculas = [{'titulo': e1, 'año_lanzamiento': e2, 'presupuesto': e3, 'ganancia': e4} for e1, e2, e3,e4 in zip(titulos, fechas_estreno, presupuesto, ganancia)]
         
-        salida = { 'director':director, 'retorno': round(retorno_total, 2),  'peliculas': pelis_json}
+        salida = { 'director':director, 'retorno': round(retorno_total, 2),  'peliculas': peliculas}
     else:
         salida = { 'director':director, 'mensaje': 'Director no encotrado'}
     return salida
@@ -148,19 +153,8 @@ def get_director(nombre_director: str):
 # ML
 @app.get('/recomendacion/{titulo}')
 def recomendacion(title:str):
-    new_datos=df_movies[0:5000]
-    new_datos.reset_index
-    for j,i in new_datos['name_genres'].items():
-        new_datos['name_genres'][j]=i.replace(",", "").replace("[", "").replace("]", "").replace("'", "")
-    new_datos['union_texto']=new_datos['name_genres'] + ' ' + new_datos['title']   + ' ' + new_datos['overview']
-    for j,i in new_datos['union_texto'].items():
-        if type(i) ==float:
-            new_datos['union_texto'][j]='-'
-    tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-    tfidf_matrix = tfidf_vectorizer.fit_transform(new_datos['union_texto'])
-    matrix_cosine=cosine_similarity(tfidf_matrix, tfidf_matrix)
     idx=new_datos.index[new_datos['title']==title][0]
-    sim_scores = list(enumerate(matrix_cosine[idx]))
+    sim_scores = list(enumerate(my_matrix[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     top_indices = [i[0] for i in sim_scores[1:10+1]]
     top_movies = new_datos['title'].iloc[top_indices].values
