@@ -319,5 +319,7 @@ crew['profile_path']=profile_path
 #Se elimina columnas que se consideran innecesarias ya que no se van a tener en cuenta en los siguientes procesos
 columnas_a_eliminar = ['profile_path','credit_id']
 crew = crew.drop(columnas_a_eliminar, axis=1)
+#Se extraen directores del dataframe ya que seran las filas a utilizar
+df_directores = crew[crew['job'] == 'Director']
 #Se exportan los datos a csv
-#crew.to_csv('crew.csv', index=False)
+#df_directores.to_csv('df_directores.csv', index=False)
