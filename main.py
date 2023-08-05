@@ -8,6 +8,7 @@ from fastapi import FastAPI, Form, Request
 from enum import Enum
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from ML import matrix
 
 
 #DATA GENERAL DE LA API
@@ -29,10 +30,8 @@ async def startup_event():
     global new_datos
     new_datos = df_movies[0:5000][['title', 'name_genres', 'overview']]
     new_datos.reset_index
-    for j,i in new_datos['name_genres'].items():
-        new_datos['name_genres'][j]=i.replace(",", "").replace("[", "").replace("]", "").replace("'", "")
-    # global my_matrix
-    # my_matrix=matrix(new_datos)
+    global my_matrix
+    my_matrix=matrix(new_datos)
     
 
 
@@ -152,14 +151,7 @@ def get_director(nombre_director: str):
 
 # ML
 @app.get('/recomendacion/{titulo}')
-def recomendacion(title:str):
-    new_datos['union_texto']=new_datos['name_genres'] + ' ' + new_datos['title']   + ' ' + new_datos['overview']
-    for j,i in new_datos['union_texto'].items():
-        if type(i) ==float:
-            new_datos['union_texto'][j]='-'
-    tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-    tfidf_matrix = tfidf_vectorizer.fit_transform(new_datos['union_texto'])
-    matrix_cosine=cosine_similarity(tfidf_matrix, tfidf_matrix)
+def recomendacion(title:str,matrix_cosine=my_matrix):
     idx=new_datos.index[new_datos['title']==title][0]
     sim_scores = list(enumerate(matrix_cosine[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)

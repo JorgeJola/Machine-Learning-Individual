@@ -64,6 +64,10 @@ for i in movies.genres:
 movies['id_genres']=id_genres
 movies['name_genres']=name_genres
 
+#Se pasa de lista string los nombres de los generos para luego ser manipulados en la matriz de similitud
+for j,i in movies['name_genres'].items():
+        movies['name_genres'][j]=str(i).replace(",", "").replace("[", "").replace("]", "").replace("'", "")
+
 movies=movies.drop('genres', axis=1)
 
 #Modificación production_companies, en esta columna se encontraron listas vacias que no las contaba diferctamente como valores nulos 
