@@ -29,7 +29,7 @@ async def startup_event():
     columnas_a_eliminar = ['original_language','overview','popularity','release_date','runtime','status','tagline','vote_average','vote_count','id_collection','name_collection','id_genres','name_genres','id_companies','name_companies','iso_countries','name_countries','iso_lenguages','name_lenguages','department','gender','id_crew','job']
     movies_crew= movies_crew.drop(columnas_a_eliminar, axis=1)
     global new_datos
-    new_datos = df_movies[0:5000][['title', 'genres', 'overview']]
+    new_datos = df_movies[0:5000][['title', 'name_genres', 'overview']]
     new_datos.reset_index
     global my_matrix
     my_matrix=matrix(new_datos)
