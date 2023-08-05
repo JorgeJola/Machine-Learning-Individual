@@ -8,7 +8,6 @@ from fastapi import FastAPI, Form, Request
 from enum import Enum
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from ML import matrix
 
 
 #DATA GENERAL DE LA API
@@ -32,8 +31,8 @@ async def startup_event():
     new_datos.reset_index
     for j,i in new_datos['name_genres'].items():
         new_datos['name_genres'][j]=i.replace(",", "").replace("[", "").replace("]", "").replace("'", "")
-    global my_matrix
-    my_matrix=matrix(new_datos)
+    # global my_matrix
+    # my_matrix=matrix(new_datos)
     
 
 
