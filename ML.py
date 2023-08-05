@@ -22,4 +22,4 @@ def recomendacion(title:str,matrix_cosine,df):
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     top_indices = [i[0] for i in sim_scores[1:5+1]]
     top_movies = df['title'].iloc[top_indices].values
-    return('El top 5 de peliculas recomendadas son las siguientes:',top_movies)
+    return(top_movies)
