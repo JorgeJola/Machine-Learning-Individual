@@ -8,7 +8,7 @@ from fastapi import FastAPI, Form, Request
 from enum import Enum
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from ML import matrix
+from ML import matrix,recomendacion
 
 
 #DATA GENERAL DE LA API
@@ -152,11 +152,7 @@ def get_director(nombre_director: str):
 
 # ML
 @app.get('/recomendacion/{titulo}')
-def recomendacion(title:str):
-    idx=new_datos.index[new_datos['title']==title][0]
-    sim_scores = list(enumerate(my_matrix[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    top_indices = [i[0] for i in sim_scores[1:10+1]]
-    top_movies = new_datos['title'].iloc[top_indices].values
-    return('El top 10 de peliculas recomendadas son las siguientes:',top_movies)
+def sistema_recomendacion(titulo):
+    titulos=recomendacion(titulo,new_datos,my_matrix=my_matrix)
+    return titulos
 
