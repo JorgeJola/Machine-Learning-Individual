@@ -125,8 +125,8 @@ def get_director(nombre_director:str):
     lis_peliculas=[]
     for j,i in movies_crew.name.items():
         if i==nombre_director:
-            lis_return.append(movies_crew.iloc[j,26]) 
-            pelicula={'titulo': movies_crew.title[j], 'año_lanzamiento': int(movies_crew.release_year[j]), 'presupuesto': movies_crew.budget[j], 'ganancia': round(movies_crew.revenue[j],5), 'retorno':round(movies_crew.iloc[j,26],5)}
+            lis_return.append(movies_crew.iloc[j,5]) 
+            pelicula={'titulo': movies_crew.title[j], 'año_lanzamiento': int(movies_crew.release_year[j]), 'presupuesto': movies_crew.budget[j], 'ganancia': round(movies_crew.revenue[j],5), 'retorno':round(movies_crew.iloc[j,5],5)}
             lis_peliculas.append(pelicula)
     if len(lis_return)==0:
         outcome= 'No se encontro director'
