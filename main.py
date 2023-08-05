@@ -8,7 +8,7 @@ from fastapi import FastAPI, Form, Request
 from enum import Enum
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from ML import matrix,recomendacion
+from ML import matrix
 
 
 #DATA GENERAL DE LA API
@@ -153,15 +153,17 @@ def get_director(nombre_director: str):
 
 # ML
 @app.get('/recomendacion/{titulo}')
-def sistema_recomendacion(titulo: str):    
-    titulo = titulo.title()
-    coincidencias = new_datos[new_datos['title'] == titulo]
-    if coincidencias.empty:
-        salida = {'title': titulo,  'mensaje': 'Titulo no encontrado'}
-    else:
-        indice = coincidencias.index[0]
-
-        recomendadas = recomendacion(df = new_datos, matriz_sim = my_matrix, indice_pelicula = indice,top_n = 5).tolist()
-
-        salida = {'titulo': titulo, 'titulos_recomendados': recomendadas}
-    return salida
+def recomendacion(title:str):
+    new_datos['union_texto']=new_datos['name_genres'] + ' ' + new_datos['title']   + ' ' + new_datos['overview']
+    for j,i in new_datos['union_texto'].items():
+        if type(i) ==float:
+            new_datos['union_texto'][j]='-'
+    tfidf_vectorizer = TfidfVectorizer(stop_words='english')
+    tfidf_matrix = tfidf_vectorizer.fit_transform(new_datos['union_texto'])
+    matrix_cosine=cosine_similarity(tfidf_matrix, tfidf_matrix)
+    idx=new_datos.index[new_datos['title']==title][0]
+    sim_scores = list(enumerate(matrix_cosine[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    top_indices = [i[0] for i in sim_scores[1:5+1]]
+    top_movies = new_datos['title'].iloc[top_indices].values
+    return('El top 5 de peliculas recomendadas son las siguientes:',top_movies)
