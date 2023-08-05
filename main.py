@@ -120,19 +120,30 @@ def productoras_exitosas(productora:str):
 
 
 @app.get('/get_director/{nombre_director}')
-def get_director(nombre_director:str):
-    lis_return=[]
-    lis_peliculas=[]
-    for j,i in movies_crew.name.items():
-        if i==nombre_director:
-            lis_return.append(movies_crew.iloc[j,5]) 
-            pelicula={'titulo': movies_crew.title[j], 'año_lanzamiento': int(movies_crew.release_year[j]), 'presupuesto': movies_crew.budget[j], 'ganancia': round(movies_crew.revenue[j],5), 'retorno':round(movies_crew.iloc[j,5],5)}
-            lis_peliculas.append(pelicula)
-    if len(lis_return)==0:
-        outcome= 'No se encontro director'
+def get_director(nombre_director: str):
+    director = nombre_director.title()
+    indices = []
+    for index, movie in movies_crew.iterrows():
+        if director in movie['name']:
+            indices.append(index)
+
+    if len(indices) > 0:
+        peliculas = movies_crew.iloc[indices][['title', 'release_year', 'budget', 'revenue', 'return']]
+        retorno_total = peliculas['return'].sum() # --> Así se pidió en las consultas
+        #retorno_total = peliculas['revenue'].sum() / peliculas['budget'].sum() 
+        titulos = peliculas['title'].to_list()
+        fechas_estreno = peliculas['release_year'].to_list()
+        presupuesto = peliculas['budget'].to_list()
+        ganancia = peliculas['revenue'].to_list()
+        
+        #SALIDA EN VERSION LISTAS
+        #salida = { 'director':director, 'return': round(retorno_total, 2),  'titles': titulos, 'release_dates': fechas_estreno, 'budgets': presupuesto, 'revenues':ganancia}
+        pelis_json = [{'titulo': e1, 'año_lanzamiento': e2, 'presupuesto': e3, 'ganancia': e4} for e1, e2, e3,e4 in zip(titulos, fechas_estreno, presupuesto, ganancia)]
+        
+        salida = { 'director':director, 'retorno': round(retorno_total, 2),  'peliculas': pelis_json}
     else:
-        outcome={'Director':nombre_director, 'retorno':round(sum(lis_return),5),'peliculas':lis_peliculas}
-    return outcome
+        salida = { 'director':director, 'mensaje': 'Director no encotrado'}
+    return salida
 
 # ML
 @app.get('/recomendacion/{titulo}')
