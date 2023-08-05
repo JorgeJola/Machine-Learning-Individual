@@ -159,7 +159,7 @@ def sistema_recomendacion(titulo: str):
     else:
         indice = coincidencias.index[0]
 
-        recomendadas = recomendacion(titulo,new_datos,my_matrix).tolist()
+        recomendadas = recomendacion(df = new_datos, matriz_sim = my_matrix, indice_pelicula = indice,top_n = 5).tolist()
 
         salida = {'titulo': titulo, 'titulos_recomendados': recomendadas}
     return salida
