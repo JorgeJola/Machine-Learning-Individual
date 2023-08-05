@@ -8,7 +8,7 @@ from sklearn.neighbors import NearestNeighbors
 
 def matrix(df):
     #Se genera la columa con el texto de entrada
-    df['texto_combinado'] = df['name_genres'].apply(lambda x: ' '.join(x)) + ' ' + df['title']   + ' ' + df['overview']
+    df['texto_combinado'] = df['name_genres'] + ' ' + df['title']   + ' ' + df['overview']
     #Elimino los signos de puntuacion
     df['texto_combinado'] = df['texto_combinado'].apply( lambda x: re.sub(r'[^\w\s]', '', x) if pd.notnull(x) else '' )
 

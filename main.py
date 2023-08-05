@@ -159,7 +159,7 @@ def get_recomendacion(titulo: str):
     else:
         indice = coincidencias.index[0]
 
-        recomendadas = recomendacion(indice, my_matrix, new_datos).tolist()
+        recomendadas = recomendacion(indice,my_matrix,new_datos).tolist()
 
         salida = {'titulo': titulo, 'titulos_recomendados': recomendadas}
     return salida
