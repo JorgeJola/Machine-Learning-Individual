@@ -151,7 +151,15 @@ def get_director(nombre_director: str):
 
 # ML
 @app.get('/recomendacion/{titulo}')
-def sistema_recomendacion(titulo):
-    titulos=recomendacion(titulo,new_datos,my_matrix=my_matrix)
-    return titulos
+def sistema_recomendacion(titulo: str):    
+    titulo = titulo.title()
+    coincidencias = new_datos[new_datos['title'] == titulo]
+    if coincidencias.empty:
+        salida = {'title': titulo,  'mensaje': 'Titulo no encontrado'}
+    else:
+        indice = coincidencias.index[0]
 
+        recomendadas = recomendacion(titulo,new_datos,my_matrix).tolist()
+
+        salida = {'titulo': titulo, 'titulos_recomendados': recomendadas}
+    return salida
