@@ -14,7 +14,7 @@ from ML import matrix,recomendacion
 
 #DATA GENERAL DE LA API
 app = FastAPI()
-app.title = "Movies API - ML MoviesRecommenderSystem"
+app.title = "API Funciones y sistema de recomendación. By: Jorge Andrés Jola Hernández"
 app.version = "1.0.0"
 
 @app.on_event("startup")
@@ -112,7 +112,7 @@ def productoras_exitosas(productora:str):
 
 @app.get('/get_director/{nombre_director}')
 def get_director(nombre_director: str):
-    '''Ingresas el nombre del directos (Ej:John Lasseter), entregandote el retorno total del director junto a las peliculas que ha realizado con sus años de estreno, presupuesto y ganancia'''
+    '''Ingresas el nombre del director (Ej:John Lasseter), entregandote el retorno total del director junto a las peliculas que ha realizado con sus años de estreno, presupuesto y ganancia'''
     director = nombre_director.title()
     x = []
     for index, movie in movies_crew.iterrows():
@@ -138,12 +138,13 @@ def get_director(nombre_director: str):
 # ML
 @app.get('/recomendacion/{titulo}')
 def get_recomendacion(titulo: str):
+    '''Ingresas el titulo de una pelicula y el sistema te entregará 5 peliculas sugeridas'''
     titulo = titulo.title()
-    coincidencias = new_datos[new_datos['title'] == titulo]
-    if coincidencias.empty:
+    Filas_encontradas = new_datos[new_datos['title'] == titulo]
+    if Filas_encontradas.empty:
         salida = {'title': titulo,  'mensaje': 'Titulo no encontrado'}
     else:
-        indice = coincidencias.index[0]
+        indice = Filas_encontradas.index[0]
 
         recomendadas = recomendacion(indice,my_matrix,new_datos).tolist()
 
