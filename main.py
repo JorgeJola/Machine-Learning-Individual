@@ -128,7 +128,7 @@ def get_director(nombre_director: str):
         presupuesto = peliculas['budget'].to_list()
         ganancia = peliculas['revenue'].to_list()
         
-        peliculas = [{'titulo': v1, 'año_lanzamiento': v2, 'presupuesto': v3, 'ganancia': v4} for v1, v2, v3,v4 in zip(titulos, fechas_estreno, presupuesto, ganancia)]
+        peliculas = [{'titulo': e1, 'año_lanzamiento': e2, 'presupuesto': e3, 'ganancia': e4} for e1, e2, e3,e4 in zip(titulos, fechas_estreno, presupuesto, ganancia)]
         
         salida = { 'director':director, 'retorno': round(retorno_total, 2),  'peliculas': peliculas}
     else:
