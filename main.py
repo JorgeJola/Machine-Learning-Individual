@@ -39,7 +39,7 @@ async def startup_event():
 
 @app.get('/peliculas_idioma/{idioma}')
 def peliculas_idioma(idioma:str):
-    '''Ingresas el idioma, retornando la cantidad de peliculas producidas en el mismo'''
+    '''Ingresas el nombre del idioma tal cual se escribe en el propio idioma (Ej: English), te retornará la cantidad de peliculas producidas en este mismo'''
     count=0
     for i in df_movies.name_lenguages:
         try:
@@ -54,6 +54,7 @@ def peliculas_idioma(idioma:str):
     
 @app.get('/peliculas_duracion/{pelicula}')
 def peliculas_duracion(pelicula):
+    '''Ingresas el nombre de la pelicula (Ej: Shrek), te retornará la duración de la pelicula junto al año en el que fue estrenada'''
     var=df_movies[df_movies['title']==pelicula]
     duracion=float(var['runtime'].values[0])
     año=int(var['release_year'].values[0])
@@ -63,6 +64,7 @@ def peliculas_duracion(pelicula):
 
 @app.get('/franquicia/{franquicia}')
 def franquicia (Franquicia):
+    '''Ingresas el nombre de la franquicia es decir el nombre de la coleccion (Ej: Toy Story Collection), te retornará el número de peliculas que contiene, la ganancia total y la ganancia promedio generada'''
     var=df_movies[df_movies['name_collection']==Franquicia]
     count=len(var)
     total=sum(var['revenue'])
@@ -71,7 +73,7 @@ def franquicia (Franquicia):
 
 @app.get('/peliculas_pais/{pais}')
 def peliculas_pais(pais:str):
-    '''Ingresas el pais, retornando la cantidad de peliculas producidas en el mismo'''
+    '''Ingresas el pais (Ej: Colombia), te retornará la cantidad de peliculas realizadas en este pais'''
     count=0
     for i in df_movies.name_countries:
         try:
@@ -89,7 +91,7 @@ def peliculas_pais(pais:str):
 
 @app.get('/productoras_exitosas/{productora}')
 def productoras_exitosas(productora:str):
-    '''Ingresas la productora, entregandote el revunue total y la cantidad de peliculas que realizo '''
+    '''Ingresas la productora (Ej: Sandollar Productions), entregandote el revunue total y la cantidad de peliculas que realizo '''
     lis_revenue=[]
     count=0
     for j,i in df_movies.name_companies.items():
@@ -110,6 +112,7 @@ def productoras_exitosas(productora:str):
 
 @app.get('/get_director/{nombre_director}')
 def get_director(nombre_director: str):
+    '''Ingresas el nombre del directos (Ej:John Lasseter), entregandote el retorno total del director junto a las peliculas que ha realizado con sus años de estreno, presupuesto y ganancia'''
     director = nombre_director.title()
     x = []
     for index, movie in movies_crew.iterrows():
@@ -125,7 +128,7 @@ def get_director(nombre_director: str):
         presupuesto = peliculas['budget'].to_list()
         ganancia = peliculas['revenue'].to_list()
         
-        peliculas = [{'titulo': e1, 'año_lanzamiento': e2, 'presupuesto': e3, 'ganancia': e4} for e1, e2, e3,e4 in zip(titulos, fechas_estreno, presupuesto, ganancia)]
+        peliculas = [{'titulo': v1, 'año_lanzamiento': v2, 'presupuesto': v3, 'ganancia': v4} for v1, v2, v3,v4 in zip(titulos, fechas_estreno, presupuesto, ganancia)]
         
         salida = { 'director':director, 'retorno': round(retorno_total, 2),  'peliculas': peliculas}
     else:
