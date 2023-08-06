@@ -53,39 +53,21 @@ def peliculas_idioma(idioma:str):
     return {'idioma':idioma, 'cantidad':count}
     
 @app.get('/peliculas_duracion/{pelicula}')
-def peliculas_duracion(pelicula:str):
-    '''Ingresas la pelicula, retornando la duracion y el año'''
-    lis=[]
-    for i in df_movies.runtime[df_movies.title==pelicula]:
-        lis.append(i)
-    try:
-        duracion=int(lis[0])
-    except:
-        duracion='No se encontro duración'
-    try:
-        anio=int(df_movies.release_year[df_movies.title==pelicula])
-    except:
-        anio=int(list(df_movies.release_year[df_movies.title==pelicula])[0])
-        
-    return {'pelicula':pelicula, 'duracion':duracion, 'anio':anio}
+def peliculas_duracion(pelicula):
+    var=df_movies[df_movies['title']==pelicula]
+    duracion=float(var['runtime'].values[0])
+    año=int(var['release_year'].values[0])
+    return(f'{pelicula} . Duración: {duracion} minutos. Año: {año}')
 
 
 
 @app.get('/franquicia/{franquicia}')
-def franquicia(franquicia:str):
-    '''Se ingresa la franquicia, retornando la cantidad de peliculas, ganancia total y promedio'''
-    count=0
-    lis_ganancia=[]
-    for j,i in df_movies.name_collection.items():
-        try:
-            if franquicia==str(i):
-                count+=1
-                lis_ganancia.append(df_movies.iloc[1,6])                
-            else:
-                continue
-        except:
-            continue
-    return {'franquicia':franquicia, 'cantidad':count, 'ganancia_total':sum(lis_ganancia), 'ganancia_promedio':np.mean(lis_ganancia)}
+def franquicia (Franquicia):
+    var=df_movies[df_movies['name_collection']==Franquicia]
+    count=len(var)
+    total=sum(var['revenue'])
+    promedio=np.mean(var['revenue'])
+    return(f'La franquicia {Franquicia} posee {count} peliculas, una ganancia total de {total} y una ganancia promedio de {round(promedio,3)} ')
 
 @app.get('/peliculas_pais/{pais}')
 def peliculas_pais(pais:str):
