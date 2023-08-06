@@ -140,11 +140,11 @@ def get_director(nombre_director: str):
 def get_recomendacion(titulo: str):
     '''Ingresas el titulo de una pelicula y el sistema te entregará 5 peliculas sugeridas'''
     titulo = titulo.title()
-    Filas_encontradas = new_datos[new_datos['title'] == titulo]
-    if Filas_encontradas.empty:
+    coincidencias = new_datos[new_datos['title'] == titulo]
+    if coincidencias.empty:
         salida = {'title': titulo,  'mensaje': 'Titulo no encontrado'}
     else:
-        indice = Filas_encontradas.index[0]
+        indice = coincidencias.index[0]
 
         recomendadas = recomendacion(indice,my_matrix,new_datos).tolist()
 
