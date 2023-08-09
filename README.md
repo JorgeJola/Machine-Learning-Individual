@@ -23,9 +23,18 @@ Para abordar esta estructura, se llevó a cabo un proceso de desanidamiento, med
 
 Vea proceso de ETL completo en: [ETL.py](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/ETL.py)
 
-# **EDA (Análisis Descriptivo)**
+## **EDA (Análisis Descriptivo)**
 Se realizó un análisis descriptivo exhaustivo de los datos, lo que nos proporcionó una comprensión más profunda de nuestra información y su alcance. Durante este proceso, se llevaron a cabo visualizaciones para identificar patrones, distribuciones y posibles correlaciones en los datos. El Análisis Exploratorio de Datos se centró en las variables que se utilizarían más adelante en las funciones, brindando una visión clave sobre elementos como `names_genre`, `overview` y `title` de las películas, que posteriormente se utilizarían para desarrollar el modelo de recomendación.
 
 Dentro del EDA, se presentan diversos tipos de gráficos, incluyendo gráficos de barras, gráficos de correlación, gráficos de dispersión y gráficos de series temporales. Estas visualizaciones permitieron realizar un análisis descriptivo en profundidad del conjunto de datos a nuestra disposición.
 
 Vea proceso de ETL completo en: [EDA.ipynb](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/EDA.ipynb)
+
+## **Desarrollo de funciones de consulta**
+A continuación, se han realizado seis funciones de consulta que permiten a cualquier usuario realizar búsquedas generando una entrada en cada una de estas funciones creadas. Aunque el código no ha sido comentado en el archivo [main.py](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/main.py), se brindará una descripción superficial del funcionamiento de cada una de estas funciones. Las funciones realizadas son las siguientes:
+`peliculas_idioma(idioma)`: En esta función, proporcionas el nombre del idioma exactamente como se escribe en dicho idioma (por ejemplo: English). La función devolverá la cantidad de películas producidas en ese idioma específico. La implementación de la función utiliza un bucle 'for' que recorre las listas de idiomas, identificando el primer idioma que corresponde al idioma en el que se filmó la película. Cada vez que se encuentra una coincidencia con el idioma, la variable contador (llamada 'count') va acumulando el número de películas realizadas en ese idioma.
+`peliculas_duracion(pelicula)`: Dentro de esta función, introduces el nombre de la película (por ejemplo: Shrek) y obtendrás como resultado la duración de la película junto con el año en que fue estrenada. Para llevar a cabo su implementación, en primer lugar se identifican las columnas que contienen este titulo y se extraen tanto el año de estreno como la duración de variables preexistentes, tales como `release_year` y `runtime`.
+`franquicia(franquicia)` :Dentro de esta función, introduces el nombre de la franquicia, es decir, el nombre de la colección (por ejemplo: Toy Story Collection), y obtendrás como resultado el número de películas que contiene, además de la ganancia total y promedio generada por dicha franquicia. Para llevar a cabo su implementación, se siguió un procedimiento similar al de la función anterior. En primer lugar, se identifican las filas que corresponden a la franquicia utilizando la variable `name_collection`, y la cantidad de películas se determina mediante la longitud de esta variable que contiene exclusivamente las filas relacionadas con la franquicia de entrada. Luego, se calcula la ganancia total empleando la función 'sum()', y para la ganancia promedio por película, se hace uso de la biblioteca numpy y su función 'np.mean()'.
+`peliculas_pais(pais)`:
+
+
