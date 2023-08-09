@@ -10,7 +10,7 @@ Durante este proceso, abordé una serie de fases cruciales para lograr implement
 En esta etapa inicial, se comenzó con los conjuntos de datos en su estado original, los cuales contenían información tanto sobre películas (movies_dataset.csv) como sobre equipos de filmación (credits.csv). A través de una serie de transformaciones exhaustivas en estos conjuntos de datos, se logró llegar a un conjunto depurado y refinado que facilitó la creación tanto de funciones de consulta como del sistema de recomendación incorporados en la API.
 Los datasets completo los puedes encontrar aqui https://drive.google.com/drive/folders/1t0eoBDPgGpy1O8OphfIK9IyIuOhhXUzK?usp=drive_link
 ## **Limpieza y tranformaciones del dataset movies.csv**
-[ETL.py](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/ETL.py)
+
 Dentro del conjunto de datos de movies.csv, se identificaron columnas con información detallada anidada que estaba vinculada a elementos específicos, como colecciones, géneros de películas, compañías de producción y lenguajes de las películas. Estos datos anidados necesitaban ser desglosados y distribuidos en columnas individuales para permitir un acceso más sencillo durante las etapas subsiguientes del proceso.
 
 En estas columnas anidadas también se encontraron valores inconsistentes o sin sentido, que posiblemente resultaron de errores de entrada. Durante el proceso de limpieza, estos valores fueron tratados como nulos y corregidos en consecuencia. Además, en el caso de variables numéricas como el presupuesto `budget` y los ingresos `revenue`, los valores faltantes se sustituyeron por ceros.
@@ -19,4 +19,13 @@ Se introdujeron nuevas columnas derivadas de las existentes, como es el caso de 
 ## **Limpieza y tranformaciones del dataset credits.csv**
 Dentro de este conjunto de datos, se identificaron dos columnas que almacenaban información distinta. La primera columna contenía datos relacionados con el elenco de la película, incluyendo información sobre los actores involucrados. En contraste, la segunda columna contenía detalles sobre el equipo de producción, que abarcaba a los directores y otros miembros del equipo de filmación.
 
-Para abordar esta estructura, se llevó a cabo un proceso de desanidamiento, mediante el cual la información de ambas columnas fue separada y organizada en dos conjuntos de datos diferentes. Sin embargo, para las etapas subsiguientes del proceso, se optó por utilizar únicamente uno de estos conjuntos de datos (crew.csv). Esta ultimo dataset fue filtrado obteniendo un dataset que contenia unicamente informacion de los directores [df_directores.csv](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/data/df_directores.csv)
+Para abordar esta estructura, se llevó a cabo un proceso de desanidamiento, mediante el cual la información de ambas columnas fue separada y organizada en dos conjuntos de datos diferentes. Sin embargo, para las etapas subsiguientes del proceso, se optó por utilizar únicamente uno de estos conjuntos de datos (crew.csv). Esta ultimo dataset fue filtrado obteniendo un dataset que contenia unicamente informacion de los directores [df_directores.csv](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/data/df_directores.csv).
+
+Vea proceso de ETL completo en: [ETL.py](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/ETL.py)
+
+# **EDA (Análisis Descriptivo)**
+Se realizó un análisis descriptivo exhaustivo de los datos, lo que nos proporcionó una comprensión más profunda de nuestra información y su alcance. Durante este proceso, se llevaron a cabo visualizaciones para identificar patrones, distribuciones y posibles correlaciones en los datos. El Análisis Exploratorio de Datos se centró en las variables que se utilizarían más adelante en las funciones, brindando una visión clave sobre elementos como `names_genre`, `overview` y `title` de las películas, que posteriormente se utilizarían para desarrollar el modelo de recomendación.
+
+Dentro del EDA, se presentan diversos tipos de gráficos, incluyendo gráficos de barras, gráficos de correlación, gráficos de dispersión y gráficos de series temporales. Estas visualizaciones permitieron realizar un análisis descriptivo en profundidad del conjunto de datos a nuestra disposición.
+
+Vea proceso de ETL completo en: [EDA.ipynb](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/EDA.ipynb)
