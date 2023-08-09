@@ -16,3 +16,6 @@ En estas columnas anidadas también se encontraron valores inconsistentes o sin 
 
 Se introdujeron nuevas columnas derivadas de las existentes, como es el caso de las variables `release_year` y `return`. Finalmente, se depuraron las filas en las que la variable 'release_date' carecía de información, y se eliminaron aquellas columnas que no aportarían mucho valor en las etapas posteriores del proceso. Este último paso tenía como objetivo reducir el tamaño de los nuevos conjuntos de datos, lo cual resultaba beneficioso para trabajar en un entorno con limitaciones de recursos.
 ## **Limpieza y tranformaciones del dataset credits.csv**
+Dentro de este conjunto de datos, se identificaron dos columnas que almacenaban información distinta. La primera columna contenía datos relacionados con el elenco de la película, incluyendo información sobre los actores involucrados. En contraste, la segunda columna contenía detalles sobre el equipo de producción, que abarcaba a los directores y otros miembros del equipo de filmación.
+
+Para abordar esta estructura, se llevó a cabo un proceso de desanidamiento, mediante el cual la información de ambas columnas fue separada y organizada en dos conjuntos de datos diferentes. Sin embargo, para las etapas subsiguientes del proceso, se optó por utilizar únicamente uno de estos conjuntos de datos (crew.csv).
