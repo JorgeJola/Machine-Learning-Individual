@@ -10,7 +10,7 @@ Durante este proceso, abordé una serie de fases cruciales para lograr implement
 En esta etapa inicial, se comenzó con los conjuntos de datos en su estado original, los cuales contenían información tanto sobre películas (movies_dataset.csv) como sobre equipos de filmación (credits.csv). A través de una serie de transformaciones exhaustivas en estos conjuntos de datos, se logró llegar a un conjunto depurado y refinado que facilitó la creación tanto de funciones de consulta como del sistema de recomendación incorporados en la API.
 Los datasets completo los puedes encontrar aqui https://drive.google.com/drive/folders/1t0eoBDPgGpy1O8OphfIK9IyIuOhhXUzK?usp=drive_link
 ## **Limpieza y tranformaciones del dataset movies.csv**
-[ETL]
+[ETL.py](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/ETL.py)
 Dentro del conjunto de datos de movies.csv, se identificaron columnas con información detallada anidada que estaba vinculada a elementos específicos, como colecciones, géneros de películas, compañías de producción y lenguajes de las películas. Estos datos anidados necesitaban ser desglosados y distribuidos en columnas individuales para permitir un acceso más sencillo durante las etapas subsiguientes del proceso.
 
 En estas columnas anidadas también se encontraron valores inconsistentes o sin sentido, que posiblemente resultaron de errores de entrada. Durante el proceso de limpieza, estos valores fueron tratados como nulos y corregidos en consecuencia. Además, en el caso de variables numéricas como el presupuesto `budget` y los ingresos `revenue`, los valores faltantes se sustituyeron por ceros.
