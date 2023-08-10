@@ -137,7 +137,7 @@ def get_director(nombre_director: str):
 # ML
 @app.get('/recomendacion/{titulo}')
 def get_recomendacion(titulo: str):
-    '''Ingresas el titulo de una pelicula y el sistema te entregará 5 peliculas sugeridas'''
+    '''Ingresas el titulo de una pelicula y el sistema te entregará 5 películas sugeridas'''
     titulo = titulo.title()
     coincidencias = new_datos[new_datos['title'] == titulo]
     if coincidencias.empty:

@@ -22,7 +22,7 @@ def matrix(df):
     return cosine_sim
 
 def recomendacion(indice_pelicula, matriz_sim, df):
-    #Ya teniendo la coincidencia entre los indices del df con la matriz se enumeran y se guardan los puntajes 
+    #Ya teniendo la coincidencia entre los indices del dataframe con la matriz se enumeran y se guardan los puntajes 
     sim_scores = list(enumerate(matriz_sim[indice_pelicula]))
     #Una ves enumerados se ordenan de mayor a menor los puntajes
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
