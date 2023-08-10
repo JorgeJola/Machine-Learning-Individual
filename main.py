@@ -121,8 +121,7 @@ def get_director(nombre_director: str):
 
     if len(x) > 0:
         peliculas = movies_crew.iloc[x][['title', 'release_year', 'budget', 'revenue', 'return']]
-        retorno_total = peliculas['return'].sum() # --> Así se pidió en las consultas
-        #retorno_total = peliculas['revenue'].sum() / peliculas['budget'].sum() 
+        retorno_total = peliculas['return'].sum() 
         titulos = peliculas['title'].to_list()
         fechas_estreno = peliculas['release_year'].to_list()
         presupuesto = peliculas['budget'].to_list()
