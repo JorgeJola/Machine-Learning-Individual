@@ -41,7 +41,13 @@ A continuación, se han realizado seis funciones de consulta que permiten a cual
 
 `franquicia(franquicia)` :Dentro de esta función, introduces el nombre de la franquicia, es decir, el nombre de la colección (por ejemplo: Toy Story Collection), y obtendrás como resultado el número de películas que contiene, además de la ganancia total y promedio generada por dicha franquicia. Para llevar a cabo su implementación, se siguió un procedimiento similar al de la función anterior. En primer lugar, se identifican las filas que corresponden a la franquicia utilizando la variable `name_collection`, y la cantidad de películas se determina mediante la longitud de esta variable que contiene exclusivamente las filas relacionadas con la franquicia de entrada. Luego, se calcula la ganancia total empleando la función 'sum()', y para la ganancia promedio por película, se hace uso de la biblioteca numpy y su función 'np.mean()'.
 
+`peliculas_pais(pais)`:En esta función, introduces el nombre del país (por ejemplo, Colombia) y obtendrás el número de películas realizadas en dicho país. Para lograrlo, se emplea un bucle for() que recorre las filas, examinando las listas generadas con la función eval() presentes en la variable `name_countries`. Si alguna de estas listas contiene el nombre del país, se utiliza una variable contador que incrementa en 1 cada vez que se encuentra una coincidencia con el país ingresado.
 
-`peliculas_pais(pais)`:
+
+`productoras_exitosas(productora)`: La función productoras_exitosas(productora) toma como entrada el nombre de una productora y recorre un conjunto de datos de películas. Durante este proceso, busca coincidencias entre la productora ingresada y las compañías asociadas a cada película. Si se encuentra una coincidencia, registra los ingresos de esa película en una lista y aumenta un contador. Al final, la función devuelve un resumen que incluye el nombre de la productora, el ingreso total de las películas asociadas y la cantidad de películas exitosas producidas por esa productora.
+
+
+`get_director`:a función recibe como entrada el nombre de un director y busca en el conjunto de datos de `movies_crew`. Identifica las películas asociadas a ese director y recopila información relevante, como títulos, años de estreno, presupuestos y ganancias. Si se encuentran películas, calcula el retorno total basado en las ganancias de las películas, y luego estructura la información en un diccionario que incluye el nombre del director, el retorno total y una lista de películas con sus detalles. En caso de no encontrar películas asociadas al director, devuelve un diccionario con un mensaje indicando que el director no fue encontrado.
+
 
 
