@@ -60,7 +60,7 @@ Las funciones realizadas para llevar a cabo el modelo las puedes encontrar en [M
 La API finalizada fue subida a render.com para su implementación, debido a que el entorno de implementación gratuito tiene un límite muy bajo de 512 MB. Se decidió reducir la cantidad de datos utilizados en el sistema de recomendación, ya que el procesamiento necesario para el proceso de aprendizaje automático en todos los datos excedía con creces el límite establecido.
 Otro problema encontrado al trabajar con render fue la necesidad de reducir las bibliotecas a solo aquellas requeridas para la implementación, y además ajustar sus versiones a las disponibles en el entorno de implementación. 
 Adicionalmente debido a un al limite de 512 MB no se genero una inerfaz grafica amigable con el usuario ya que la modificacion del archivo [main.py](https://github.com/JorgeJola/PI_ML_OPS-JorgeJola/blob/main/main.py) conllevaba muy facilmente a un exceso que sobrepasaba este limite. Por lo que se decidio presentar una interfaz menos amigable pero que cumplia las funciones basicas de la API.
-Observe API aqui [API](https://funciones-y-sistema-de-recomendacion.onrender.com) 
+Observe API aqui [API](https://funciones-y-sistema-de-recomendacion.onrender.com/docs) 
 
 Para obtener más información detallada sobre la API, consulte el archivo main.py.
 
